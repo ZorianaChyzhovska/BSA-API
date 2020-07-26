@@ -3,40 +3,111 @@ let stickerNum = 0;
 function topFunction() {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  // document.getElementsByClassName("characters").innerHTML = ""; 
+  //clearNode()
+  //stickerNum = 0;
+  //getElements();
+}
+function clearNode(node = document.getElementsByClassName("characters"), from = 0) {
+
+   while (node.children.length > from) {
+       node.removeChild(node.lastChild);
+  }
 }
 
-//--------------------- 
+//------------- Sorting by episodes
+const sortByEpisodesBtn = document.querySelector('#sort_by_episodes>button');
+const sortByEpisodesSelect = document.querySelector('#sort_by_episodes>select');
 
-window.addEventListener("DOMContentLoaded", () => {
-  
+sortByEpisodesBtn.addEventListener('click', evt => {
+  document.getElementsByClassName("characters").innerHTML = '';
+  clearNode();
   fetch(`https://rickandmortyapi.com/api/character/`)
-    .then(res => res.json())
-    .then(data => {
-
-      let characters = data.results;
-      
-      const totalPages = data.info.pages;
-
-      if (totalPages > 1) {
-        for (i = 2; i <= totalPages; i++) {
-          let page = i;
-          fetch(`https://rickandmortyapi.com/api/character/?page=${i}`)
-            .then(res => res.json())
-            .then(data => {
-              characters = characters.concat(data.results);
-
-              if (page === totalPages) {
-                stickerNum = 0;
-                render(characters);
-              }
-            })
-        }
-      } else {
-        stickerNum = 0;
-        render(characters);
-      }
-    })
+      .then(res => res.json())
+      .then(data => {
   
+        let characters = data.results;
+        
+        const totalPages = data.info.pages;
+  
+        if (totalPages > 1) {
+          for (i = 2; i <= totalPages; i++) {
+            let page = i;
+            fetch(`https://rickandmortyapi.com/api/character/?page=${i}`)
+              .then(res => res.json())
+              .then(data => {
+                characters = characters.concat(data.results);
+  
+                if (page === totalPages) {
+                  stickerNum = 0;
+                                    
+                  //sort by episodes
+                  
+                  characters = sortPosts(characters);
+                  render(characters);
+                }
+              })
+          }
+        } else {
+          stickerNum = 0;
+          //sort
+          //console.log(characters);
+          characters = sortPosts(characters);
+          render(characters);
+        }
+      })
+  
+});
+
+function sortPosts(characters) {;
+
+  if(document.getElementById('sort_by_episodes').selectedIndex == 'The largest number'){
+    characters = characters.sort((a, b) => b.episode.length - a.episode.length );
+  }else if(document.getElementById('sort_by_episodes').selectedIndex == 'The least number'){
+    characters = characters.sort((a, b) => a.episode.length - b.episode.length );
+  }
+  return characters;
+}
+
+//----------------------------------------------
+
+
+    function getElements(){
+      fetch(`https://rickandmortyapi.com/api/character/`)
+      .then(res => res.json())
+      .then(data => {
+  
+        let characters = data.results;
+        
+        const totalPages = data.info.pages;
+  
+        if (totalPages > 1) {
+          for (i = 2; i <= totalPages; i++) {
+            let page = i;
+            fetch(`https://rickandmortyapi.com/api/character/?page=${i}`)
+              .then(res => res.json())
+              .then(data => {
+                characters = characters.concat(data.results);
+  
+                if (page === totalPages) {
+                  stickerNum = 0;
+                                    
+                  //sort by episodes
+                  
+                  
+                  render(characters);
+                }
+              })
+          }
+        } else {
+          stickerNum = 0;
+          //sort
+          //console.log(characters);
+          render(characters);
+        }
+      })
+    }
+    getElements();
  //-----------------------Search ---------------------
   const search = document.querySelector('#instant-search'),
   charactersOutput = document.querySelector('.characters');
@@ -70,12 +141,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
                 if (page === totalPages) {
                   stickerNum = 0;
+                  //sort
                   render(characters);
                 }
               })
           }
         } else {
           stickerNum = 0;
+          //sort
           render(characters);
         }
       })
@@ -112,7 +185,6 @@ window.addEventListener("DOMContentLoaded", () => {
         </div>
       </article>`
     //});
-    //sortPosts();
     charactersOutput.innerHTML = output;    
   }
   //-------------------------------------------------------------------------------
@@ -158,10 +230,10 @@ window.addEventListener("DOMContentLoaded", () => {
   function scrollFunction(array) {
       
     let maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    let currentScroll = window.pageYOffset // || doc.scrollTop;
-    if ( currentScroll  ==  maxScroll ) {  
-        render(array);
-    }
+    let currentScroll = window.pageYOffset;
+    if( currentScroll  ==  maxScroll ) {  
+      render(array);
+    } 
   }
   //-------------------------------------------------------------------------------
 
@@ -176,19 +248,5 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
- 
-  //--------------------- 
-
-});
-
-// function sortPosts() {
-//   const sortBy = window.localStorage.getItem('sortBy') ? window.localStorage.getItem('sortBy') : 'date';
-
-//   if (sortBy == 'date') {
-//     posts.sort(sortByDate);
-//   } else {
-//     posts.sort(sortByTags);
-//   }
-// }
-
-
+  //----------------------------------------------------------------------------
+  
