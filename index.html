@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,700" rel="stylesheet">
+    <title>BSA | API task | Zoriana Chyzhovska</title>
+    <link href="./img/icon.ico" rel="icon" type="image/x-icon" />
+</head>
+<body>
+    <div class="wrapper">
+        
+        <div class="header-container">
+            <div class="left_side">
+                <div class="header-logo">
+                    <a href="#"><img src="./img/logo.png" alt="logo"></a>
+                </div>
+            </div>
+            <div class="right_side">
+                <div class="sort-search">
+                    <div class="sort">
+                        <span>Sort by date:</span>
+        
+                        <div id="sort_by_date">
+                            <select data-sort="date" class="input_field">
+                                <option value="true">Newest first</option>
+                                <option value="false">Oldest first</option>
+                            </select>
+                        
+                            <!--<button class="btn" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>-->
+                        </div>
+                    </div>
+                    <div class="sort">
+                        <span>Sort by episodes:</span>
+        
+                        <div id="sort_by_episodes">
+                            
+                            <select data-sort="episodes" class="input_field">
+                                <option value="true">The least number</option>
+                                <option value="false">The largest number</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="search">
+                        <span>Instant search:</span>
+        
+                        <div>
+                            <input type="text" class="input_field" id="instant-search" placeholder="Search...">     
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>	
+        
+        <div class="main-title">
+            <span>Characters</span>
+        </div>
+
+        <button onclick="topFunction()" id="topBtn" title="Go to top">Top</button>
+
+        <div class = "content-body">
+            <section class = "main-content">
+                
+            </section>
+        </div>
+
+        <div class="characters">
+
+        </div>
+
+        
+        
+
+    </div>
+    
+    <script src="./js/index.js"></script>
+</body>
+</html>
